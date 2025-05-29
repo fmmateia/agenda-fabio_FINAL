@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Evento no Calendário</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    h2 {
+      text-align: center;
+      color: #333333;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      color: #555;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Agendar Evento</h2>
+    <form id="eventoForm">
+      <label for="titulo">Título</label>
+      <input type="text" name="titulo" id="titulo" required>
+
+      <label for="data_inicio">Data (AAAA-MM-DD)</label>
+      <input type="date" name="data_inicio" id="data_inicio" required>
+
+      <label for="hora_inicio">Hora de Início</label>
+      <input type="time" name="hora_inicio" id="hora_inicio" required>
+
+      <label for="hora_fim">Hora de Fim</label>
+      <input type="time" name="hora_fim" id="hora_fim" required>
+
+      <button type="submit">📅 Criar Evento</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('eventoForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = {
+        titulo: this.titulo.value,
+        data_inicio: this.data_inicio.value,
+        hora_inicio: this.hora_inicio.value,
+        hora_fim: this.hora_fim.value
+      };
+      fetch("https://hook.eu2.make.com/qdchp53s48ochw9j6rvu1zxyb52ew5ct", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      }).then(response => {
+        if (response.ok) {
+          alert("✅ Evento enviado com sucesso!");
+          this.reset();
+        } else {
+          alert("❌ Erro ao enviar o evento.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
